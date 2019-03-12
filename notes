@@ -1,0 +1,8 @@
+Cyclic - requires at least one cycle to be cyclic.
+Acyclic - no cycles in graph
+
+Weighted - values attached to connections
+Unweighted - no values
+
+Directed - 1 direction connections
+Undirected - bi directional connections
