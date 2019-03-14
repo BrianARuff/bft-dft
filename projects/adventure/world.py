@@ -33,6 +33,62 @@ class World:
             if 'w' in roomGraph[roomID][1]:
                 self.rooms[roomID].connectRooms('w', self.rooms[roomGraph[roomID][1]['w']])
         self.startingRoom = self.rooms[0]
+        
+    def printRooms(self, currentRoom=None):
+        rotatedRoomGrid = []
+        for i in range(0, len(self.roomGrid)):
+            rotatedRoomGrid.append([None] * len(self.roomGrid))
+        for i in range(len(self.roomGrid)):
+            for j in range(len(self.roomGrid[0])):
+                rotatedRoomGrid[len(self.roomGrid[0]) -
+                                j - 1][i] = self.roomGrid[i][j]
+        roomGrid = rotatedRoomGrid
+        map_str = ""
+        for row in roomGrid:
+            map_str += "#"
+            for room in row:
+                if room is not None and room.n_to is not None:
+                    map_str += "  |  "
+                else:
+                    map_str += "     "
+            map_str += "#\n"
+            # Print room row
+            map_str += "#"
+            for room in row:
+                if room is not None and room.w_to is not None:
+                    map_str += "-"
+                else:
+                    map_str += " "
+                if room is not None:
+                    if room.id == currentRoom.id:
+                        # uses ansi charater codes
+                        # http://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
+                        playerStr = '\u001b[31m$'
+                        if len(str(room.id)) == 1:
+                            #the space makes it work\|/
+                            map_str += (f"{playerStr} \u001b[0m{str(room.id)}")
+                        elif len(str(room.id)) == 2:
+                            map_str += (f"{playerStr}\u001b[0m{str(room.id)}")
+                        else:
+                            map_str += (f"{playerStr}\u001b[0m{str(room.id)[:2]}")
+
+                    else:
+                        map_str += f"{room.id}".zfill(3)
+                else:
+                    map_str += "   "
+                if room is not None and room.e_to is not None:
+                    map_str += "-"
+                else:
+                    map_str += " "
+            map_str += "#\n"
+            map_str += "#"
+            for room in row:
+                if room is not None and room.s_to is not None:
+                    map_str += "  |  "
+                else:
+                    map_str += "     "
+            map_str += "#\n"
+            print(map_str)
 
 
 

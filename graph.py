@@ -37,6 +37,17 @@ class Graph:
                     stack.append(v)
         print(visited)
 
+    def dft_recurse(self, start, target, visited=[], path=[]):
+        visited.append(start)
+        path += start
+        if start == target:
+            return path
+        for v in self.vertices[start]:
+            if v not in visited:
+                new_path = self.dft_recurse(v, target, visited, path)
+                if new_path:
+                    return new_path
+
 g = Graph()
 g.add_vertex('3')
 g.add_vertex('5')
@@ -51,4 +62,5 @@ g.add_edge('2', '5')
 g.add_edge('2', '6')
 g.add_edge('3', '5')
 g.add_edge('3', '6')
-g.dft('0')
+# g.dft('0')
+print(g.dft_recurse('0', '5'))
